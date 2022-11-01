@@ -12,7 +12,12 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_11_01_093302) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
   enable_extension "plpgsql"
+
+  create_table "genre", id: :integer, default: nil, force: :cascade do |t|
+    t.text "name"
+  end
 
   create_table "messages", force: :cascade do |t|
     t.string "greeting"
@@ -20,4 +25,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_01_093302) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "musicalbum", id: :integer, default: nil, force: :cascade do |t|
+    t.date "publish_date"
+    t.boolean "archived"
+    t.integer "genre_id"
+  end
+
+  add_foreign_key "musicalbum", "genre", name: "musicalbum_genre_id_fkey"
 end
